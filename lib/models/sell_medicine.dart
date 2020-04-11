@@ -1,8 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 
 class SellMedicine {
-  final String med_name, seller_name, ID, seller_address, seller_email;
+  final String med_name,
+      seller_name,
+      ID,
+      seller_address,
+      seller_email,
+      med_category;
   final int med_qty, med_price;
   final GeoPoint seller_location;
   final Timestamp exp_date;
@@ -10,6 +16,7 @@ class SellMedicine {
   SellMedicine(
       {this.med_name,
       this.isSold,
+      @required this.med_category,
       this.exp_date,
       this.ID,
       this.seller_email,
@@ -26,6 +33,7 @@ class SellMedicineService {
       'med_name': sellMedicine.med_name,
       'isSold': sellMedicine.isSold,
       'exp_date': sellMedicine.exp_date,
+      'med_category': sellMedicine.med_category,
       'seller_email': sellMedicine.seller_email,
       'med_price': sellMedicine.med_price,
       'med_qty': sellMedicine.med_qty,
@@ -43,6 +51,7 @@ class SellMedicineService {
   List<SellMedicine> _sellMedicinefromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return SellMedicine(
+        med_category: doc.data['med_category'],
         ID: doc.documentID,
         exp_date: doc.data['exp_date'],
         med_name: doc.data['med_name'] ?? '',

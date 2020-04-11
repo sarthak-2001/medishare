@@ -121,86 +121,94 @@ class _SellMedicinePageState extends State<SellMedicinePage> {
                         return Center(
                           child: Text('You are not selling anything'),
                         );
-                      return Card(
-                        elevation: 26,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              width: 100,
-                              child: Column(
+                      return Visibility(
+                        visible: sellmedicine[index].seller_email == user.email,
+                        child: Card(
+                          color: Color(0xff191919),
+                          elevation: 26,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                width: 100,
+                                child: Column(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(1.0),
+                                      child: Image(
+                                        image: AssetImage('images/capsule.png'),
+                                        height: 90,
+                                        width: 90,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Text(
+                                        '${sellmedicine[index].med_name}',
+                                        style: TextStyle(fontSize: 16),
+                                        softWrap: true,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.all(1.0),
-                                    child: Image(
-                                      image: AssetImage('images/capsule.png'),
-                                      height: 90,
-                                      width: 90,
-                                      fit: BoxFit.cover,
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Text(
+                                      'Quantity available: ${sellmedicine[index].med_qty}',
+                                      style: TextStyle(fontSize: 16),
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(4.0),
                                     child: Text(
-                                      '${sellmedicine[index].med_name}',
+                                      'Total Price: ${sellmedicine[index].med_price}',
                                       style: TextStyle(fontSize: 16),
-                                      softWrap: true,
                                     ),
-                                  )
+                                  ),
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Text(
+                                      'Expiry date : ${format_notime.format(sellmedicine[index].exp_date.toDate())}',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+//
                                 ],
                               ),
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Text(
-                                    'Quantity available: ${sellmedicine[index].med_qty}',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Text(
-                                    'Total Price: ${sellmedicine[index].med_price}',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ),
-
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Text(
-                                    'Expiry date : ${format_notime.format(sellmedicine[index].exp_date.toDate())}',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ),
-//
-                              ],
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: InkWell(
-                                    onTap: () {
-                                      SellMedicineService().deleteSellMedicine(
-                                          sellmedicine[index].ID);
-                                    },
-                                    child: Icon(
-                                      Icons.delete,
-                                      size: 30,
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        SellMedicineService()
+                                            .deleteSellMedicine(
+                                                sellmedicine[index].ID);
+                                      },
+                                      child: Icon(
+                                        Icons.delete,
+                                        size: 30,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
+                                  Divider(),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -295,6 +303,7 @@ class _SellMedicinePageState extends State<SellMedicinePage> {
 
                 GeoPoint point = GeoPoint(pos.latitude, pos.longitude);
                 await SellMedicineService().addSellMedicine(SellMedicine(
+                    med_category: med.category,
                     med_name: med.name,
                     isSold: false,
                     exp_date: datet,

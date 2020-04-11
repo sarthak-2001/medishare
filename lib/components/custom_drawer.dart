@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:medishare/models/user.dart';
+import 'package:medishare/screen/buy_medicine_page.dart';
 import 'package:medishare/screen/sell_medicine_page.dart';
 import 'package:medishare/screen/welcome_screen.dart';
 import 'package:provider/provider.dart';
@@ -57,11 +58,11 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
             InkWell(
-//              onTap: () {
-//                Navigator.pop(context);
-//                Navigator.push(context,
-//                    MaterialPageRoute(builder: (context) => MyOrders()));
-//              },
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BuyMedicinePage()));
+              },
               child: ListTile(
                 title: Text('Buy Medicines'),
                 leading: Icon(Icons.shopping_basket, color: Color(0xff3FC890)),

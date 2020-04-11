@@ -186,7 +186,7 @@ class _MainScreenState extends State<MainScreen> {
                                       Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: Text(
-                                          'Quantity left: ${userMeds[index]['q_prescribed']}',
+                                          'Medicines to eat: ${userMeds[index]['q_prescribed']}',
                                           style: TextStyle(fontSize: 16),
                                         ),
                                       ),
