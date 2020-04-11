@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:medishare/models/user.dart';
+import 'package:medishare/screen/sell_medicine.dart';
 import 'package:medishare/screen/welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,8 +9,6 @@ import 'package:url_launcher/url_launcher.dart';
 var _auth = FirebaseAuth.instance;
 
 class CustomDrawer extends StatelessWidget {
-//  final UserData user;
-//  CustomDrawer({@required this.user});
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -18,30 +17,12 @@ class CustomDrawer extends StatelessWidget {
         behavior: NoScrollGlow(),
         child: ListView(
           children: <Widget>[
-            //header
-//            UserAccountsDrawerHeader(
-//              currentAccountPicture: Image(
-//                image: AssetImage('images/logo.jpeg'),
-//              ),
-//              margin: EdgeInsets.only(bottom: 5),
-//              accountEmail: Text(
-//                user.email,
-//                style: TextStyle(
-//                    fontSize: 20,
-//                    fontWeight: FontWeight.w400,
-//                    letterSpacing: 1),
-//              ),
-//              decoration: BoxDecoration(
-//                color: Colors.green,
-//              ),
-//            ),
             Image(
               image: AssetImage('images/logo.jpeg'),
               width: double.infinity,
               fit: BoxFit.cover,
               height: MediaQuery.of(context).size.height * 0.2,
             ),
-
             Padding(
               padding: const EdgeInsets.only(top: 8, left: 18.0),
               child: Text(
@@ -59,7 +40,6 @@ class CustomDrawer extends StatelessWidget {
               thickness: 1.2,
               color: Colors.white24,
             ),
-
             InkWell(
               onTap: () {
                 Navigator.pop(context);
@@ -91,8 +71,8 @@ class CustomDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
 
-//                Navigator.push(context,
-//                    MaterialPageRoute(builder: (context) => Categories()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SellMedicine()));
               },
               child: ListTile(
                 title: Text('Sell Medicines'),
@@ -132,14 +112,6 @@ class CustomDrawer extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<void> _launchMail(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      print('cant launch');
-    }
   }
 }
 

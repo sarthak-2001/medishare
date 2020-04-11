@@ -16,7 +16,7 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
-  String email, password;
+  String email, password, name;
   bool loading = false;
 
   @override
@@ -56,14 +56,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 8.0,
               ),
               TextField(
-                  obscureText: true,
+                obscureText: true,
+                textAlign: TextAlign.center,
+                onChanged: (value) {
+                  password = value;
+                },
+                style: TextStyle(color: Colors.black),
+                decoration: kTextFieldDecoration.copyWith(
+                    hintText: 'Enter your password'),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                  keyboardType: TextInputType.emailAddress,
                   textAlign: TextAlign.center,
                   onChanged: (value) {
-                    password = value;
+                    name = value;
                   },
                   style: TextStyle(color: Colors.black),
                   decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Enter your password')),
+                      hintText: 'Enter your name')),
               SizedBox(
                 height: 24.0,
               ),
@@ -79,7 +92,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 //                        email: email, password: password);
 
                     final newUser =
-                        await UserAuthService().signUp(email, password);
+                        await UserAuthService().signUp(email, password, name);
                     if (newUser == true) {
                       Fluttertoast.showToast(msg: 'User Registered');
 

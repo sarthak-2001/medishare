@@ -18,12 +18,12 @@ var maskTextInputFormatter =
     MaskTextInputFormatter(mask: "####-##-##", filter: {"#": RegExp(r'[0-9]')});
 var format_notime = new DateFormat('d MMM');
 
-class MainScreen extends StatefulWidget {
+class SellMedicine extends StatefulWidget {
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _SellMedicineState createState() => _SellMedicineState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _SellMedicineState extends State<SellMedicine> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -33,10 +33,10 @@ class _MainScreenState extends State<MainScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('DashBoard'),
+          backgroundColor: Color(0xff191919),
+          title: Text('Sell Medicine'),
           centerTitle: true,
         ),
-        drawer: CustomDrawer(),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Center(
@@ -50,11 +50,11 @@ class _MainScreenState extends State<MainScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Your Medicines',
+                      'Your Shop',
                       style: TextStyle(fontSize: 20, letterSpacing: 1),
                     ),
                     RaisedButton(
-                      color: Colors.brown,
+                      color: Colors.brown[600],
                       child: Text(
                         'Add Medicine',
                         style: TextStyle(
@@ -85,8 +85,8 @@ class _MainScreenState extends State<MainScreen> {
                                       onTap: () {
                                         print('I am tapped');
                                         Navigator.pop(context);
-                                        addMedicinePersonal(
-                                            context, med, user.email);
+//                                    addMedicineSell(
+//                                        context, med, user.email);
                                       },
                                       child: Column(
                                         mainAxisAlignment:
@@ -119,14 +119,11 @@ class _MainScreenState extends State<MainScreen> {
                     builder: (context, snapshot) {
                       List userMeds = snapshot.data.documents;
 
-                      if (userMeds.length == 0) {
+                      if (!snapshot.hasData) {
                         return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 68.0),
-                            child: Text(
-                              'Add your medicines',
-                              style: TextStyle(fontSize: 20),
-                            ),
+                          child: Text(
+                            'Add your medicines',
+                            style: TextStyle(fontSize: 20),
                           ),
                         );
                       }
@@ -299,7 +296,7 @@ class _MainScreenState extends State<MainScreen> {
 
   //-----------------------------------------------ADD MEDICINE DIALOGUE-------------------------------
 
-  addMedicinePersonal(context, GlobalMedicine med, String email) {
+  addMedicineSell(context, GlobalMedicine med, String email) {
     TextEditingController qtyAvailable = TextEditingController();
     TextEditingController perday = TextEditingController();
 

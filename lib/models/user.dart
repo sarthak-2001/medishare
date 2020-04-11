@@ -38,7 +38,7 @@ class UserAuthService {
     }
   }
 
-  Future<bool> signUp(String email, String password) async {
+  Future<bool> signUp(String email, String password, String name) async {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -46,7 +46,7 @@ class UserAuthService {
         _firestore
             .collection('users')
             .document(user.user.email)
-            .setData({'email': email, 'uid': user.user.uid});
+            .setData({'email': email, 'uid': user.user.uid, 'name': name});
       });
       return true;
     } catch (e) {
