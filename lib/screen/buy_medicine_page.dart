@@ -55,8 +55,6 @@ class _BuyMedicinePageState extends State<BuyMedicinePage> {
     _razorpay.clear();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
