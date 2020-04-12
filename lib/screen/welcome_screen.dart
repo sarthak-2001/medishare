@@ -63,8 +63,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               },
             ),
             RoundedButton(
-              title: 'Log In As Chemist',
-              colour: Colors.lightBlueAccent,
+              title: 'Register As Chemist',
+              colour: Colors.blueAccent,
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoginScreen()));

@@ -261,6 +261,8 @@ class _MainScreenState extends State<MainScreen> {
                                         padding: const EdgeInsets.all(4.0),
                                         child: InkWell(
                                           onTap: () async {
+                                            Fluttertoast.showToast(
+                                                msg: 'share was tapped');
                                             await addMedicineSell(
                                                 context, userMeds[index], user);
                                           },
@@ -290,6 +292,8 @@ class _MainScreenState extends State<MainScreen> {
   //--------------------------ADD SELL MED----------------------------------
 
   addMedicineSell(context, DocumentSnapshot med, User user) {
+    Fluttertoast.showToast(msg: 'dialogue box show');
+
     TextEditingController medqty = TextEditingController();
     TextEditingController medprice = TextEditingController();
 
@@ -327,6 +331,8 @@ class _MainScreenState extends State<MainScreen> {
           DialogButton(
             onPressed: () async {
               if (key.currentState.validate()) {
+                Fluttertoast.showToast(msg: 'data valid');
+
                 Position pos = await Geolocator().getCurrentPosition(
                     desiredAccuracy: LocationAccuracy.bestForNavigation);
 

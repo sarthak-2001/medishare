@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class MedicineBoughtPage extends StatefulWidget {
-  final SellMedicine med;
+  final BoughtMedicine med;
   MedicineBoughtPage({@required this.med});
   @override
   _MedicineBoughtPageState createState() => _MedicineBoughtPageState();
@@ -37,15 +37,9 @@ class _MedicineBoughtPageState extends State<MedicineBoughtPage> {
         msg: "SUCCESS: " + response.paymentId, timeInSecForIos: 4);
 
     await BoughtMedicineService(email: Provider.of<User>(context).email)
-        .addBoughtMedicine(BoughtMedicine(
-            buyer_email: Provider.of<User>(context).email,
-            seller_email: widget.med.seller_email,
-            med_name: widget.med.med_name,
-            med_qty: widget.med.med_qty,
-            med_price: widget.med.med_price,
-            seller_location: widget.med.seller_location));
+        .updatePayment(widget.med.ID);
 
-    await SellMedicineService().updateisSold(widget.med.ID);
+    await SellMedicineService().updateisSold(widget.med.seller_med_ID);
 
     print('upload');
     Navigator.pop(context);

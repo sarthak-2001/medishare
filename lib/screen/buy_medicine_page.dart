@@ -10,6 +10,7 @@ import 'package:map_launcher/map_launcher.dart';
 import 'package:medishare/models/bought_product.dart';
 import 'package:medishare/models/global_medicine.dart';
 import 'package:medishare/models/sell_medicine.dart';
+import 'package:medishare/screen/add_prescription_page.dart';
 import 'package:medishare/models/user.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:medishare/screen/medicine_bought_page.dart';
@@ -44,6 +45,7 @@ class _BuyMedicinePageState extends State<BuyMedicinePage> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+    var mail = user.email;
 
     List<SellMedicine> sellmedicine = Provider.of<List<SellMedicine>>(context);
 
@@ -160,42 +162,15 @@ class _BuyMedicinePageState extends State<BuyMedicinePage> {
                                                   color: Colors.white)),
                                           child: InkWell(
                                             onTap: () {
-                                              Alert(
-                                                context: context,
-                                                title: "UPLOAD PRESCRIPTION",
-                                                desc:
-                                                    "Upload prescription of medicine to continue",
-                                                buttons: [
-                                                  DialogButton(
-                                                    child: Text(
-                                                      "TAKE PICTURE",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 15),
-                                                    ),
-                                                    onPressed: () async {
-//                                                      Navigator.pop(context);
-                                                      await getImage();
-                                                      if (_image == null) {
-                                                        Fluttertoast.showToast(
-                                                            msg:
-                                                                'Upload prescription');
-                                                        return;
-                                                      }
-                                                      Navigator.pop(context);
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  MedicineBoughtPage(
-                                                                    med: med,
-                                                                  )));
-                                                      print('done');
-                                                    },
-                                                    width: 120,
-                                                  )
-                                                ],
-                                              ).show();
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AppPrescriptionPage(
+                                                    med: med,
+                                                  ),
+                                                ),
+                                              );
                                             },
                                             child: Padding(
                                               padding:
@@ -286,16 +261,21 @@ class _BuyMedicinePageState extends State<BuyMedicinePage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Container(
-                                          width: 210,
-                                          child: Text(
-                                            'Seller email: ${boughtMeds[index].seller_email}',
-                                            softWrap: true,
-                                            style: TextStyle(fontSize: 16),
+                                      Visibility(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Container(
+                                            width: 210,
+                                            child: Text(
+                                              'Seller email: ${boughtMeds[index].seller_email}',
+                                              softWrap: true,
+                                              style: TextStyle(fontSize: 16),
+                                            ),
                                           ),
                                         ),
+                                        visible:
+                                            boughtMeds[index].payment_done ==
+                                                true,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(4.0),
@@ -311,20 +291,72 @@ class _BuyMedicinePageState extends State<BuyMedicinePage> {
                                           style: TextStyle(fontSize: 16),
                                         ),
                                       ),
-                                      MaterialButton(
-                                        child: Text(
-                                          'Go to Seller',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w400),
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Visibility(
+                                          visible: boughtMeds[index].verified ==
+                                              false,
+                                          child: Text(
+                                            'Wait For Verifictaion',
+                                            style: TextStyle(
+                                                fontSize: 19,
+                                                fontWeight: FontWeight.w500),
+                                          ),
                                         ),
-                                        color: Colors.brown[700],
-                                        onPressed: () {
-                                          openMapsSheet(
-                                              context,
-                                              boughtMeds[index]
-                                                  .seller_location);
-                                        },
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Visibility(
+                                          visible:
+                                              (boughtMeds[index].payment_done ==
+                                                      false &&
+                                                  boughtMeds[index].verified ==
+                                                      true),
+                                          child: MaterialButton(
+                                            child: Text(
+                                              'BUY',
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            color: Colors.brown[700],
+                                            onPressed: () {
+                                              /////////////////////////////////////////////////////////////////
+//                                            Navigate to buy page and do stuff
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          MedicineBoughtPage(
+                                                              med: boughtMeds[
+                                                                  index])));
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Visibility(
+                                          visible:
+                                              (boughtMeds[index].payment_done ==
+                                                      true &&
+                                                  boughtMeds[index].verified ==
+                                                      true),
+                                          child: MaterialButton(
+                                            child: Text(
+                                              'Go to Seller',
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            color: Colors.brown[700],
+                                            onPressed: () {
+                                              openMapsSheet(
+                                                  context,
+                                                  boughtMeds[index]
+                                                      .seller_location);
+                                            },
+                                          ),
+                                        ),
                                       )
                                     ],
                                   ),
@@ -341,6 +373,30 @@ class _BuyMedicinePageState extends State<BuyMedicinePage> {
         ),
       ),
     );
+  }
+
+  void _selectImage(Future<File> pickImage, int imageNumber) async {
+    File tempImg = await pickImage;
+    setState(() => _image = tempImg);
+  }
+
+  Widget _displayChild1() {
+    if (_image == null) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(14, 50, 14, 50),
+        child: new Icon(
+          Icons.add,
+          color: Colors.grey,
+        ),
+      );
+    } else {
+      return Image.file(
+        _image,
+        fit: BoxFit.cover,
+        width: 200,
+        height: 250,
+      );
+    }
   }
 
   openMapsSheet(context, GeoPoint point) async {
