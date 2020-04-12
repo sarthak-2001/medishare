@@ -309,6 +309,7 @@ class _SellMedicinePageState extends State<SellMedicinePage> {
                   Permission.location.request();
                   Fluttertoast.showToast(
                       msg: 'Give location permission/enable location');
+                  return;
                 }
 
                 GeoPoint point = GeoPoint(pos.latitude, pos.longitude);

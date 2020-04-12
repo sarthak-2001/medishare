@@ -19,7 +19,6 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 Geoflutterfire geo = Geoflutterfire();
 var maskTextInputFormatter =
@@ -104,13 +103,6 @@ class _BuyMedicinePageState extends State<BuyMedicinePage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
-//                                        Text(
-//                                          'seller : ${med.seller_email}',
-//                                          style: TextStyle(fontSize: 18),
-//                                        ),
-//                                        SizedBox(
-//                                          height: 4,
-//                                        ), //-------------------------------------------------
                                         Text(
                                           'Name : ${med.med_name}',
                                           style: TextStyle(fontSize: 18),
@@ -147,7 +139,7 @@ class _BuyMedicinePageState extends State<BuyMedicinePage> {
                                             print('${di} KM');
                                             Alert(
                                                     context: context,
-                                                    title: "DISTANCE",
+                                                    title: "MIN. DISTANCE",
                                                     desc:
                                                         "${di.toStringAsFixed(2)} KM")
                                                 .show();
@@ -398,6 +390,7 @@ class _BuyMedicinePageState extends State<BuyMedicinePage> {
     if (pos == null) {
       Permission.location.request();
       Fluttertoast.showToast(msg: 'Give location permission/enable location');
+      return;
     }
 
     double distanceInMeters = await Geolocator().distanceBetween(

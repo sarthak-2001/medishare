@@ -25,6 +25,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -325,9 +327,6 @@ class _MainScreenState extends State<MainScreen> {
           DialogButton(
             onPressed: () async {
               if (key.currentState.validate()) {
-//                DateTime date = DateTime.parse(expdate.text);
-//                Timestamp datet = Timestamp.fromDate(date);
-
                 Position pos = await Geolocator().getCurrentPosition(
                     desiredAccuracy: LocationAccuracy.bestForNavigation);
 
@@ -335,6 +334,7 @@ class _MainScreenState extends State<MainScreen> {
                   Permission.location.request();
                   Fluttertoast.showToast(
                       msg: 'Give location permission/enable location');
+                  return;
                 }
 
                 GeoPoint point = GeoPoint(pos.latitude, pos.longitude);
@@ -366,6 +366,7 @@ class _MainScreenState extends State<MainScreen> {
   //-----------------------------------------------ADD MEDICINE DIALOGUE-------------------------------
 
   addMedicinePersonal(context, GlobalMedicine med, String email) {
+    bool _loading = false;
     TextEditingController qtyAvailable = TextEditingController();
     TextEditingController perday = TextEditingController();
 

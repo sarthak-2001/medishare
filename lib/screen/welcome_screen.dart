@@ -37,7 +37,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               height: 48.0,
             ),
             RoundedButton(
-              title: 'Log In',
+              title: 'Log In As User',
               colour: Colors.lightBlueAccent,
               onPressed: () {
                 Navigator.push(context,
@@ -45,14 +45,31 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               },
             ),
             RoundedButton(
-                title: 'Register',
-                colour: Colors.blueAccent,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegistrationScreen()));
-                }),
+              title: 'Register As User',
+              colour: Colors.blueAccent,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RegistrationScreen()));
+              },
+            ),
+            RoundedButton(
+              title: 'Log In As Chemist',
+              colour: Colors.lightBlueAccent,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
+              },
+            ),
+            RoundedButton(
+              title: 'Log In As Chemist',
+              colour: Colors.lightBlueAccent,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
+              },
+            ),
           ],
         ),
       ),
