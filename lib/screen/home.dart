@@ -292,8 +292,6 @@ class _MainScreenState extends State<MainScreen> {
   //--------------------------ADD SELL MED----------------------------------
 
   addMedicineSell(context, DocumentSnapshot med, User user) {
-    Fluttertoast.showToast(msg: 'dialogue box show');
-
     TextEditingController medqty = TextEditingController();
     TextEditingController medprice = TextEditingController();
 
@@ -331,8 +329,6 @@ class _MainScreenState extends State<MainScreen> {
           DialogButton(
             onPressed: () async {
               if (key.currentState.validate()) {
-                Fluttertoast.showToast(msg: 'data valid');
-
                 Position pos = await Geolocator().getCurrentPosition(
                     desiredAccuracy: LocationAccuracy.bestForNavigation);
 

@@ -1,5 +1,6 @@
 import 'package:medishare/components/rounded_button.dart';
 import 'package:flutter/material.dart';
+import 'package:medishare/screen/login_screen_chemist.dart';
 import 'login_screen.dart';
 import 'registration_screen.dart';
 
@@ -58,16 +59,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               title: 'Log In As Chemist',
               colour: Colors.lightBlueAccent,
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
-              },
-            ),
-            RoundedButton(
-              title: 'Register As Chemist',
-              colour: Colors.blueAccent,
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LoginScreenChemist()));
               },
             ),
           ],
